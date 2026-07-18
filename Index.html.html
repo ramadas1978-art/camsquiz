@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily CAMS Challenge — Day 10</title>
+<meta property="og:title" content="Daily CAMS Challenge — Day 10">
+<meta property="og:description" content="One CAMS-style question a day. Confiscated IDs, wages paid to one account for many workers — what typology is this?">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b1f3a;
+    --ink-soft:#22385c;
+    --paper:#f6f7f9;
+    --card:#ffffff;
+    --gold:#c9a227;
+    --gold-soft:#f3ead0;
+    --green:#1e8e5a;
+    --green-soft:#e4f3ec;
+    --red:#c0392b;
+    --red-soft:#fbe9e6;
+    --line:#dde3ec;
+    --muted:#5b6b84;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:
+      radial-gradient(1200px 500px at 50% -200px, #16315a 0%, var(--ink) 60%),
+      var(--ink);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 14px 56px;
+  }
+  .sheet{width:100%;max-width:680px}
+
+  /* ---------- masthead ---------- */
+  .masthead{color:#fff;text-align:center;margin-bottom:22px}
+  .logo{
+    width:124px;height:124px;margin:0 auto 14px;display:block;
+    filter:drop-shadow(0 10px 24px rgba(0,0,0,.5));
+  }
+  .brand-line{
+    font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
+    color:#e3c25a;margin-bottom:12px;
+  }
+  .badge-row{display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:10px}
+  .day-chip{
+    font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink);background:var(--gold);
+    padding:5px 12px;border-radius:3px;
+  }
+  .masthead h1{
+    font-family:'Fraunces',serif;font-weight:700;
+    font-size:clamp(26px,5.5vw,38px);line-height:1.15;letter-spacing:.01em;
+  }
+  .masthead h1 span{color:var(--gold)}
+  .masthead p{
+    margin-top:8px;font-size:13px;color:#b9c5d8;letter-spacing:.04em;
+  }
+
+  /* ---------- case card ---------- */
+  .card{
+    background:var(--card);
+    border-radius:10px;
+    box-shadow:0 24px 60px rgba(3,10,24,.45);
+    overflow:hidden;
+    position:relative;
+  }
+  .card-top{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 22px;border-bottom:1px solid var(--line);
+    background:var(--paper);
+    font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  }
+  .card-top .ref{color:var(--ink)}
+  .card-body{padding:24px 22px 26px}
+
+  .domain{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--gold);border-radius:3px;
+    padding:4px 10px;margin-bottom:14px;background:var(--gold-soft);
+  }
+  .question{
+    font-family:'Fraunces',serif;font-weight:600;
+    font-size:clamp(17px,3.6vw,20px);line-height:1.5;color:var(--ink);
+  }
+  .select-note{
+    margin-top:10px;font-size:13px;font-weight:600;color:var(--muted);
+  }
+  .select-note b{color:var(--ink)}
+
+  /* ---------- options ---------- */
+  .options{margin-top:20px;display:grid;gap:10px}
+  .opt{
+    display:flex;gap:12px;align-items:flex-start;
+    width:100%;text-align:left;
+    background:var(--card);
+    border:1.5px solid var(--line);border-radius:8px;
+    padding:14px 14px;
+    font:inherit;font-size:14.5px;line-height:1.5;color:var(--ink);
+    cursor:pointer;
+    transition:border-color .15s, background .15s, transform .08s;
+  }
+  .opt:hover{border-color:var(--ink-soft)}
+  .opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .opt .key{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    border:1.5px solid var(--line);
+    display:grid;place-items:center;
+    font-size:12px;font-weight:700;color:var(--muted);
+    transition:all .15s;
+  }
+  .opt.picked{border-color:var(--ink);background:#eef2f8}
+  .opt.picked .key{background:var(--ink);border-color:var(--ink);color:#fff}
+  .opt.correct{border-color:var(--green);background:var(--green-soft)}
+  .opt.correct .key{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.wrong{border-color:var(--red);background:var(--red-soft)}
+  .opt.wrong .key{background:var(--red);border-color:var(--red);color:#fff}
+  .opt.missed{border-color:var(--green);border-style:dashed}
+  .opt[disabled]{cursor:default}
+  .tag{
+    flex:none;margin-left:auto;align-self:center;
+    font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    padding:3px 8px;border-radius:3px;display:none;
+  }
+  .opt.correct .tag{display:inline-block;background:var(--green);color:#fff}
+  .opt.wrong .tag{display:inline-block;background:var(--red);color:#fff}
+  .opt.missed .tag{display:inline-block;background:#fff;color:var(--green);border:1px solid var(--green)}
+
+  /* ---------- submit ---------- */
+  .actions{margin-top:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .submit{
+    font:inherit;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--ink);color:#fff;border:none;border-radius:6px;
+    padding:13px 26px;cursor:pointer;transition:background .15s,opacity .15s;
+  }
+  .submit:hover{background:var(--ink-soft)}
+  .submit:disabled{opacity:.35;cursor:not-allowed}
+  .submit:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .picked-count{font-size:13px;color:var(--muted);font-weight:600}
+
+  /* ---------- verdict stamp (signature element) ---------- */
+  .stamp{
+    position:absolute;top:14px;right:16px;
+    font-family:'Special Elite',monospace;
+    font-size:clamp(18px,4vw,24px);letter-spacing:.14em;
+    padding:8px 16px;border:3px solid;border-radius:6px;
+    transform:rotate(8deg) scale(2.4);opacity:0;
+    pointer-events:none;white-space:nowrap;
+    mix-blend-mode:multiply;
+  }
+  .stamp.show{animation:slam .35s cubic-bezier(.2,1.4,.4,1) forwards}
+  @keyframes slam{
+    to{transform:rotate(-9deg) scale(1);opacity:.88}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .stamp.show{animation:none;transform:rotate(-9deg) scale(1);opacity:.88}
+  }
+  .stamp.pass{color:var(--green);border-color:var(--green)}
+  .stamp.fail{color:var(--red);border-color:var(--red)}
+
+  /* ---------- rationale ---------- */
+  .rationale{
+    display:none;margin-top:22px;border-top:1px solid var(--line);padding-top:18px;
+  }
+  .rationale.show{display:block}
+  .rationale h2{
+    font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:10px;
+  }
+  .rationale p{font-size:13.5px;line-height:1.65;color:var(--ink-soft);margin-bottom:10px}
+  .rationale p b{color:var(--ink)}
+  .retry{
+    font:inherit;font-size:13px;font-weight:600;color:var(--ink);
+    background:none;border:1.5px solid var(--line);border-radius:6px;
+    padding:9px 16px;cursor:pointer;margin-top:4px;
+  }
+  .retry:hover{border-color:var(--ink)}
+
+  /* ---------- footer / CTA ---------- */
+  .cta{
+    margin-top:18px;text-align:center;color:#b9c5d8;font-size:13px;line-height:1.7;
+  }
+  .cta b{color:var(--gold)}
+  .cta .creds{
+    display:inline-block;margin-top:6px;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:#8fa0ba;
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+
+  <header class="masthead">
+    <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Sentinel Harbor — Navigating Risk, Anchoring Integrity">
+  <defs>
+    <radialGradient id="sh-sky" cx="50%" cy="30%" r="80%">
+      <stop offset="0%" stop-color="#16315a"/>
+      <stop offset="100%" stop-color="#0b1f3a"/>
+    </radialGradient>
+    <linearGradient id="sh-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e3c25a"/>
+      <stop offset="100%" stop-color="#c9a227"/>
+    </linearGradient>
+    <path id="sh-arcTop" d="M 512 512 m -368 0 a 368 368 0 1 1 736 0" fill="none"/>
+    <path id="sh-arcBottom" d="M 512 512 m -400 0 a 400 400 0 1 0 800 0" fill="none"/>
+    <!-- anchor symbol -->
+    <g id="sh-anchor" fill="none" stroke="#d1a92f" stroke-width="10" stroke-linecap="round">
+      <circle cx="0" cy="-30" r="10"/>
+      <line x1="0" y1="-20" x2="0" y2="28"/>
+      <line x1="-18" y1="-4" x2="18" y2="-4"/>
+      <path d="M -28 6 A 28 28 0 0 0 28 6"/>
+      <path d="M -28 6 L -36 -3 M -28 6 L -19 2" stroke-width="8"/>
+      <path d="M 28 6 L 36 -3 M 28 6 L 19 2" stroke-width="8"/>
+    </g>
+    <!-- four-point compass star -->
+    <path id="sh-cstar" d="M 0 -26 L 6 -6 L 26 0 L 6 6 L 0 26 L -6 6 L -26 0 L -6 -6 Z" fill="url(#sh-gold)"/>
+  </defs>
+
+  <!-- outer badge -->
+  <circle cx="512" cy="512" r="500" fill="url(#sh-sky)"/>
+  <circle cx="512" cy="512" r="500" fill="none" stroke="url(#sh-gold)" stroke-width="14"/>
+  <circle cx="512" cy="512" r="452" fill="none" stroke="#c9a227" stroke-width="3" opacity="0.55"/>
+
+  <!-- inner field -->
+  <circle cx="512" cy="512" r="308" fill="#0b1f3a" stroke="url(#sh-gold)" stroke-width="8"/>
+
+  <!-- beacon rays -->
+  <g fill="#e3c25a" opacity="0.9">
+    <polygon points="512,330 300,240 512,308" opacity="0.55"/>
+    <polygon points="512,330 724,240 512,308" opacity="0.55"/>
+    <polygon points="512,318 366,200 512,296" opacity="0.35"/>
+    <polygon points="512,318 658,200 512,296" opacity="0.35"/>
+  </g>
+
+  <!-- lighthouse -->
+  <g>
+    <rect x="482" y="306" width="60" height="46" rx="6" fill="url(#sh-gold)"/>
+    <circle cx="512" cy="329" r="13" fill="#fff8e1"/>
+    <rect x="472" y="352" width="80" height="14" rx="7" fill="url(#sh-gold)"/>
+    <path d="M 486 366 L 538 366 L 560 610 L 464 610 Z" fill="#f6f7f9"/>
+    <path d="M 481 424 L 543 424 L 547 464 L 477 464 Z" fill="url(#sh-gold)"/>
+    <path d="M 473 512 L 551 512 L 555 552 L 469 552 Z" fill="url(#sh-gold)"/>
+    <rect x="498" y="566" width="28" height="44" rx="14" fill="#0b1f3a"/>
+    <rect x="446" y="610" width="132" height="20" rx="8" fill="url(#sh-gold)"/>
+  </g>
+
+  <!-- harbor waves -->
+  <g fill="none" stroke="url(#sh-gold)" stroke-width="12" stroke-linecap="round">
+    <path d="M 320 672 q 48 -30 96 0 q 48 30 96 0 q 48 -30 96 0 q 48 30 96 0"/>
+    <path d="M 368 705 q 48 -28 96 0 q 48 28 96 0 q 48 -28 96 0" opacity="0.6"/>
+  </g>
+
+  <!-- anchor beneath the waves: anchoring integrity -->
+  <use href="#sh-anchor" transform="translate(512 778) scale(0.9)"/>
+
+  <!-- wordmark on top arc -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="86" font-weight="bold"
+        letter-spacing="14" fill="#f6f7f9">
+    <textPath href="#sh-arcTop" startOffset="50%" text-anchor="middle">SENTINEL HARBOR</textPath>
+  </text>
+
+  <!-- tagline on bottom arc -->
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="38"
+        letter-spacing="5" fill="#e3c25a">
+    <textPath href="#sh-arcBottom" startOffset="50%" text-anchor="middle">NAVIGATING RISK · ANCHORING INTEGRITY</textPath>
+  </text>
+
+  <!-- compass stars centered in the gap between wordmark and tagline -->
+  <use href="#sh-cstar" transform="translate(139 553) scale(0.9)"/>
+  <use href="#sh-cstar" transform="translate(885 553) scale(0.9)"/>
+</svg>
+    <div class="brand-line">Sentinel Harbor</div>
+    <div class="badge-row">
+      <span class="day-chip">Day 10 · Case File</span>
+    </div>
+    <h1>Daily <span>CAMS</span> Challenge</h1>
+    <p>One exam-style question a day · AML / CFT · Global AFC Standards</p>
+  </header>
+
+  <section class="card" aria-live="polite">
+    <div class="stamp" id="stamp" aria-hidden="true"></div>
+
+    <div class="card-top">
+      <span class="ref">REF: DCC-2026-010</span>
+      <span>Domain · Emerging &amp; High-Risk Sectors</span>
+    </div>
+
+    <div class="card-body">
+      <span class="domain">Human Trafficking</span>
+
+      <p class="question">
+        A staffing agency supplying workers to hotels and restaurants deposits large
+        third-party checks. Wages for dozens of workers are paid into a <u>small number of
+        bank accounts controlled by the agency's owner</u>, and workers' identification
+        documents are reportedly held by the agency. This pattern is a red flag most
+        strongly associated with which typology?
+      </p>
+
+
+      <div class="options" id="options" role="group" aria-label="Answer options"></div>
+
+      <div class="actions">
+        <button class="submit" id="submit" disabled>Check Answer</button>
+        <span class="picked-count" id="count"></span>
+      </div>
+
+      <div class="rationale" id="rationale">
+        <h2>Examiner's Rationale</h2>
+        <p><b>A — Correct.</b> <b>Confiscated identity documents</b> and <b>wages diverted to
+        accounts the workers do not control</b> are two of the clearest financial indicators
+        identified in the FATF/APG report on the <i>Financial Flows from Human
+        Trafficking</i> — control over identity and control over pay are the mechanisms
+        that keep victims trapped.</p>
+        <p><b>B — Incorrect.</b> Tax evasion may exist alongside this pattern, but it does not
+        explain the confiscated IDs or the concentration of pay into the controller's own
+        accounts.</p>
+        <p><b>C — Incorrect.</b> Vendor fraud involves false billing between businesses, not
+        control over individual workers' identity and wages.</p>
+        <p><b>D — Incorrect.</b> Invoice factoring is a legitimate financing arrangement
+        unrelated to worker control or document confiscation.</p>
+        <button class="retry" id="retry">Try again</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="cta">
+    Answered before checking? Drop <b>your picks in the comments</b> 👇<br>
+    Follow for tomorrow's case file.
+    <span class="creds">Sentinel Harbor · Curated by an AFC professional · CAMS · CGSS</span>
+  </footer>
+
+</main>
+
+<script>
+(function(){
+  const DATA = [
+    {key:"A", text:"Labor trafficking and forced labor", correct:true},
+    {key:"B", text:"Payroll tax evasion", correct:false},
+    {key:"C", text:"Vendor invoice fraud", correct:false},
+    {key:"D", text:"Invoice factoring", correct:false}
+  ];
+  const MAX = 1;
+  const optionsEl = document.getElementById("options");
+  const submitEl  = document.getElementById("submit");
+  const countEl   = document.getElementById("count");
+  const stampEl   = document.getElementById("stamp");
+  const ratEl     = document.getElementById("rationale");
+  const retryEl   = document.getElementById("retry");
+  let picked = new Set();
+  let locked = false;
+
+  function render(){
+    optionsEl.innerHTML = "";
+    DATA.forEach(function(o){
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "opt";
+      btn.dataset.key = o.key;
+      btn.innerHTML =
+        '<span class="key">'+o.key+'</span>'+
+        '<span class="txt">'+o.text+'</span>'+
+        '<span class="tag"></span>';
+      btn.addEventListener("click", function(){ toggle(o.key, btn); });
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function toggle(key, btn){
+    if(locked) return;
+    if(picked.has(key)){
+      picked.delete(key);
+      btn.classList.remove("picked");
+    }else{
+      if(picked.size >= MAX) return;
+      picked.add(key);
+      btn.classList.add("picked");
+    }
+    countEl.textContent = MAX > 1 ? (picked.size + " of " + MAX + " selected") : "";
+    submitEl.disabled = picked.size !== MAX;
+  }
+
+  function grade(){
+    locked = true;
+    submitEl.disabled = true;
+    let hits = 0;
+    document.querySelectorAll(".opt").forEach(function(btn){
+      const item = DATA.find(function(o){ return o.key === btn.dataset.key; });
+      const tag = btn.querySelector(".tag");
+      btn.disabled = true;
+      btn.classList.remove("picked");
+      if(picked.has(item.key) && item.correct){
+        btn.classList.add("correct"); tag.textContent = "Correct"; hits++;
+      }else if(picked.has(item.key) && !item.correct){
+        btn.classList.add("wrong"); tag.textContent = "Not this";
+      }else if(!picked.has(item.key) && item.correct){
+        btn.classList.add("missed"); tag.textContent = "Answer";
+      }
+    });
+    const pass = hits === MAX;
+    stampEl.textContent = pass ? "CLEARED ✔" : "FOR REVIEW";
+    stampEl.className = "stamp show " + (pass ? "pass" : "fail");
+    countEl.textContent = pass ? MAX + " / " + MAX + " — well spotted." : hits + " / " + MAX + " — check the rationale.";
+    ratEl.classList.add("show");
+  }
+
+  function reset(){
+    locked = false;
+    picked = new Set();
+    submitEl.disabled = true;
+    countEl.textContent = "0 of 2 selected";
+    stampEl.className = "stamp";
+    ratEl.classList.remove("show");
+    render();
+  }
+
+  submitEl.addEventListener("click", grade);
+  retryEl.addEventListener("click", reset);
+  render();
+})();
+</script>
+</body>
+</html>
