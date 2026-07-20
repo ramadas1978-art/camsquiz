@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily CAMS Challenge — Day 10</title>
-<meta property="og:title" content="Daily CAMS Challenge — Day 10">
-<meta property="og:description" content="One CAMS-style question a day. Confiscated IDs, wages paid to one account for many workers — what typology is this?">
+<title>Daily CAMS Challenge — Day 12</title>
+<meta property="og:title" content="Daily CAMS Challenge — Day 12">
+<meta property="og:description" content="One CAMS-style question a day. Deposits from five cities, withdrawals from one — what typology is this?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
@@ -278,7 +278,7 @@
 </svg>
     <div class="brand-line">Sentinel Harbor</div>
     <div class="badge-row">
-      <span class="day-chip">Day 10 · Case File</span>
+      <span class="day-chip">Day 12 · Case File</span>
     </div>
     <h1>Daily <span>CAMS</span> Challenge</h1>
     <p>One exam-style question a day · AML / CFT · Global AFC Standards</p>
@@ -288,19 +288,18 @@
     <div class="stamp" id="stamp" aria-hidden="true"></div>
 
     <div class="card-top">
-      <span class="ref">REF: DCC-2026-010</span>
-      <span>Domain · Emerging &amp; High-Risk Sectors</span>
+      <span class="ref">REF: DCC-2026-012</span>
+      <span>Domain · Risks &amp; Methods</span>
     </div>
 
     <div class="card-body">
-      <span class="domain">Human Trafficking</span>
+      <span class="domain">Funnel Accounts</span>
 
       <p class="question">
-        A staffing agency supplying workers to hotels and restaurants deposits large
-        third-party checks. Wages for dozens of workers are paid into a <u>small number of
-        bank accounts controlled by the agency's owner</u>, and workers' identification
-        documents are reportedly held by the agency. This pattern is a red flag most
-        strongly associated with which typology?
+        A monitoring system flags an account that receives numerous cash deposits from
+        different individuals across several distant cities, with the funds quickly
+        withdrawn or wired out from a single branch far from where the deposits were made.
+        This pattern is best described as:
       </p>
 
 
@@ -313,18 +312,17 @@
 
       <div class="rationale" id="rationale">
         <h2>Examiner's Rationale</h2>
-        <p><b>A — Correct.</b> <b>Confiscated identity documents</b> and <b>wages diverted to
-        accounts the workers do not control</b> are two of the clearest financial indicators
-        identified in the FATF/APG report on the <i>Financial Flows from Human
-        Trafficking</i> — control over identity and control over pay are the mechanisms
-        that keep victims trapped.</p>
-        <p><b>B — Incorrect.</b> Tax evasion may exist alongside this pattern, but it does not
-        explain the confiscated IDs or the concentration of pay into the controller's own
-        accounts.</p>
-        <p><b>C — Incorrect.</b> Vendor fraud involves false billing between businesses, not
-        control over individual workers' identity and wages.</p>
-        <p><b>D — Incorrect.</b> Invoice factoring is a legitimate financing arrangement
-        unrelated to worker control or document confiscation.</p>
+        <p><b>A — Correct.</b> A <b>funnel account</b> collects many small, geographically
+        dispersed cash deposits — often street-level proceeds — into one account, then rapidly
+        moves the pooled funds out from a different location. FinCEN advisories link this
+        pattern strongly to <b>drug trafficking</b> and other cash-intensive crime.</p>
+        <p><b>B — Incorrect.</b> Nested correspondent banking involves one financial
+        institution accessing correspondent services through another's account — a
+        bank-to-bank relationship, not individual cash deposits.</p>
+        <p><b>C — Incorrect.</b> Trade-based fraud relies on manipulated invoices and goods
+        movements, not cash deposits and withdrawals.</p>
+        <p><b>D — Incorrect.</b> A nominee director arrangement conceals corporate control —
+        unrelated to the deposit-and-withdrawal geography described here.</p>
         <button class="retry" id="retry">Try again</button>
       </div>
     </div>
@@ -341,10 +339,10 @@
 <script>
 (function(){
   const DATA = [
-    {key:"A", text:"Labor trafficking and forced labor", correct:true},
-    {key:"B", text:"Payroll tax evasion", correct:false},
-    {key:"C", text:"Vendor invoice fraud", correct:false},
-    {key:"D", text:"Invoice factoring", correct:false}
+    {key:"A", text:"Funnel account activity", correct:true},
+    {key:"B", text:"Nested correspondent banking", correct:false},
+    {key:"C", text:"Invoice-based trade fraud", correct:false},
+    {key:"D", text:"A nominee director arrangement", correct:false}
   ];
   const MAX = 1;
   const optionsEl = document.getElementById("options");
