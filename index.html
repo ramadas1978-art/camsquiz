@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily CAMS Challenge — Day 15</title>
-<meta property="og:title" content="Daily CAMS Challenge — Day 15">
-<meta property="og:description" content="One CAMS-style question a day. An urgent call, a new payee, funds gone in hours — can you spot BOTH APP fraud red flags?">
+<title>Daily CAMS Challenge — Day 14</title>
+<meta property="og:title" content="Daily CAMS Challenge — Day 14">
+<meta property="og:description" content="One CAMS-style question a day. Cash in, barely any play, a check out to someone else — what typology is this?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Special+Elite&display=swap" rel="stylesheet">
@@ -278,7 +278,7 @@
 </svg>
     <div class="brand-line">Sentinel Harbor</div>
     <div class="badge-row">
-      <span class="day-chip">Day 15 · Case File</span>
+      <span class="day-chip">Day 14 · Case File</span>
     </div>
     <h1>Daily <span>CAMS</span> Challenge</h1>
     <p>One exam-style question a day · AML / CFT · Global AFC Standards</p>
@@ -288,42 +288,41 @@
     <div class="stamp" id="stamp" aria-hidden="true"></div>
 
     <div class="card-top">
-      <span class="ref">REF: DCC-2026-015</span>
-      <span>Domain · Fraud &amp; Financial Exploitation</span>
+      <span class="ref">REF: DCC-2026-014</span>
+      <span>Domain · High-Risk Sectors</span>
     </div>
 
     <div class="card-body">
-      <span class="domain">APP Fraud &amp; Mules</span>
+      <span class="domain">Casino &amp; Gaming</span>
 
       <p class="question">
-        A retail bank's fraud and AML team reviews two linked accounts after a customer
-        complaint. Which of the following are the <u>strongest indicators</u> of authorized
-        push payment (APP) fraud and money mule activity?
+        A casino patron converts a large sum of cash into chips, gambles minimally or not at
+        all, and then redeems the chips for a company check made out to a third party. This
+        pattern is best described as:
       </p>
-      <p class="select-note">Select <b>TWO</b> answers, then submit.</p>
 
 
       <div class="options" id="options" role="group" aria-label="Answer options"></div>
 
       <div class="actions">
         <button class="submit" id="submit" disabled>Check Answer</button>
-        <span class="picked-count" id="count">0 of 2 selected</span>
+        <span class="picked-count" id="count"></span>
       </div>
 
       <div class="rationale" id="rationale">
         <h2>Examiner's Rationale</h2>
-        <p><b>A — Correct.</b> Urgency plus an unsolicited "bank security" call is the
-        signature manipulation behind <b>authorized push payment fraud</b> — the victim
-        willingly authorizes the transfer, believing they are protecting their own funds,
-        which is exactly why APP scams bypass traditional fraud controls.</p>
-        <p><b>C — Correct.</b> Rapid pass-through of incoming funds into multiple smaller
-        onward transfers, from a freshly opened account, is the classic signature of a
-        <b>money mule</b> layering stolen or scammed funds before they can be traced or
-        recalled.</p>
-        <p><b>B — Incorrect.</b> A recurring transfer to a known, long-established recipient
-        is routine, expected account behavior.</p>
-        <p><b>D — Incorrect.</b> Payment from a verified, established counterparty for
-        delivered goods is normal commercial activity.</p>
+        <p><b>A — Correct.</b> <b>Chip walking</b> — also called minimal-play or "cash-in,
+        walk-out" laundering — uses the casino purely as a <b>conversion point</b>: cash goes
+        in as chips, little or no actual gambling occurs, and the chips come back out as an
+        official casino check, giving illicit funds the appearance of legitimate gaming
+        winnings. FinCEN's casino guidance flags this pattern specifically.</p>
+        <p><b>B — Incorrect.</b> Structuring involves breaking transactions into smaller
+        amounts to stay under reporting thresholds — the scenario doesn't describe amount
+        splitting.</p>
+        <p><b>C — Incorrect.</b> Trade-based laundering relies on manipulated invoices and
+        goods, not casino chips.</p>
+        <p><b>D — Incorrect.</b> Bust-out fraud involves running up credit and abandoning
+        the debt — unrelated to converting cash through gaming chips.</p>
         <button class="retry" id="retry">Try again</button>
       </div>
     </div>
@@ -340,12 +339,12 @@
 <script>
 (function(){
   const DATA = [
-    {key:"A", text:"A customer instructs an urgent, same-day transfer to a new payee shortly after an unsolicited call from someone claiming to be their bank's fraud department.", correct:true},
-    {key:"B", text:"A customer sets up a recurring monthly transfer to a family member's long-established account.", correct:false},
-    {key:"C", text:"Funds received into a recently opened account are forwarded out through several smaller transfers to different accounts within hours of arrival.", correct:true},
-    {key:"D", text:"A business account receives payment from a long-standing, verified customer for goods already delivered.", correct:false}
+    {key:"A", text:"Chip walking (minimal-play laundering)", correct:true},
+    {key:"B", text:"Structuring", correct:false},
+    {key:"C", text:"Trade-based money laundering", correct:false},
+    {key:"D", text:"Bust-out fraud", correct:false}
   ];
-  const MAX = 2;
+  const MAX = 1;
   const optionsEl = document.getElementById("options");
   const submitEl  = document.getElementById("submit");
   const countEl   = document.getElementById("count");
